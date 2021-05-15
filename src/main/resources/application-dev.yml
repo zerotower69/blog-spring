@@ -1,0 +1,100 @@
+#配置端口
+server:
+  port: 10000
+  ssl:
+    key-store: classpath:scs1617112609259_zerotower.cn_server.jks
+    key-store-password: Jv2#hppkC5!A1hXo
+    key-store-type: JKS
+    enabled: false
+
+httpPort: 9043
+#配置mysql数据库
+spring:
+  datasource:
+    name: zerotower-blog
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    hikari:
+      minimum-idle: 5
+      # 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 180000
+      # 连接池最大连接数，默认是10
+      maximum-pool-size: 10
+      # 此属性控制从池返回的连接的默认自动提交行为,默认值：true
+      auto-commit: true
+      # 连接池名称
+      pool-name: MyHikariCP
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 1800000
+      # 数据库连接超时时间,默认30秒，即30000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  #redis配置
+  redis:
+    host: localhost
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    connect-timeout: 30000
+  #mq配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  #邮箱配置
+  mail:
+    username: #your email account
+    password: # password or code
+    host: smtp.163.com # I use 163
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+      class: javax.net.ssl.SSLSocketFactory
+  #图片大小限制
+  servlet:
+    multipart:
+      max-file-size: 40MB
+      max-request-size: 100MB
+
+
+#配置MybatisPlus
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+#第三方配置信息
+
+aliyun:
+  url: #  url 域名？？？
+  endpoint: # 可以是oss-cn-beijing ,oss-cn-hangzhou 等等
+  accessKeyId: #your oss accesskey id
+  accessKeySecret: #your oss accesskey secret
+  bucketName: # bucketname
+
+github:
+  client:
+    id:
+    secret:
+  redirect_uri: http://localhost:8082/oauth/login/github
+  token_uri: https://github.com/login/oauth/access_token
+  api_uri: https://api.github.com/user?access_token=
+gitee:
+  client:
+    id:
+    secret:
+  redirect_uri: http://localhost:8082/oauth/login/gitee
+  token_uri: https://gitee.com/oauth/token
+  api_uri: https://gitee.com/api/v5/user
